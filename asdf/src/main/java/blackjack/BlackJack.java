@@ -10,10 +10,10 @@ public class BlackJack {
 
     public static void main(String[] args) {
         Player one = new Player(100);
-        one.introduceThemselves("Aye Den");
+        one.introduceThemselves("Jawn");
 
         Player two = new Player(300);
-        two.introduceThemselves("Kah Een");
+        two.introduceThemselves("Kai Nuh");
 
         List<Player> gameParticipants = new ArrayList<>();
         gameParticipants.add(one);
