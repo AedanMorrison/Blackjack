@@ -94,7 +94,7 @@ public class BlackJack {
                     GameActions.resetPlayerValues(gameParticipants);
                     break;
                 default:
-                    //can remain empty for now
+                    //loop memory leak til crash
             }
         }
     }
