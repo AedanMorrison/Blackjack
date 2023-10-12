@@ -79,7 +79,7 @@ public class BlackJack {
                     for (Player player: gameParticipants) {
                         if (!GameActions.checkIfPlayerCanContinue(player, MINIMUM_BET)) {
                             System.out.println(player.name + " doesn't have enough to keep playing.");
-                            int reBuyInAmount = PlayerInputs.getPlayerReBuyIn(player, MINIMUM_BET);
+                            int reBuyInAmount = PlayerInputs.getPlayerReBuyIn(player);
                             if (reBuyInAmount < MINIMUM_BET) {
                                 gameParticipants.remove(player);
                             } else if (reBuyInAmount > TABLE_MAX) {
@@ -94,7 +94,7 @@ public class BlackJack {
                     GameActions.resetPlayerValues(gameParticipants);
                     break;
                 default:
-                    //can remain empty for now
+                    //loop memory leak til crash
             }
         }
     }

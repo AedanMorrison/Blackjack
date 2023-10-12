@@ -7,23 +7,11 @@ import java.util.ConcurrentModificationException;
 
 public class PlayerInputs {
 
-    public static void main(String[] asdf) {
-        int n = 1300;
-        for (int i = 0; i < 25; i++) {
-            n *= 1.02;
-        }
-        System.out.println(n*2);
-        System.out.println((n*2)/13);
-    }
-    //numerical amount for bets
-    //Action choice for cards
-
     public static int takePlayerBet(Player bettingPlayer) {
         System.out.println(bettingPlayer.name + " should input a number for a bet now. Don't go broke.");
         int desiredBet = ensureInputIsNumber(getInputFromTerminal());
         while (checkAgainstMinimumBet(desiredBet) || checkAgainstPlayerFunds(desiredBet, bettingPlayer)) {
             desiredBet = ensureInputIsNumber(getInputFromTerminal());
-            //TODO: Make it so player can't try forever
         }
         System.out.println(bettingPlayer.name + " has chosen to bet: " + desiredBet);
         return desiredBet;
@@ -61,30 +49,18 @@ public class PlayerInputs {
         }
     }
 
-    public static int getPlayerReBuyIn(Player player, int minimumBet) {
-        System.out.println("How much would " + player.name + " like to buy back in with? If they're out, leave blank.");
+    public static int getPlayerReBuyIn(Player player) {
+        System.out.println("How much would " + player.name + " like to buy back in with? If you're out, don't type a number.");
         while (true) {
-            String playerInput = getInputFromTerminal();
-            try {
-                Integer.parseInt(playerInput);
-            } catch (NumberFormatException e) {
-                System.out.println("Too big bitch. Try again? The table won't accept more than " + BlackJack.TABLE_MAX + " anyway.");
-                continue;
+            int playerInput = ensureInputIsNumber(getInputFromTerminal());
+            if (playerInput == 0) {
+                return playerInput;
             }
-            if (playerInput.equals("")) {
-                return 0;
-            }
-            try {
-                int reBuyInAmount = Integer.parseInt(playerInput);
-                if (reBuyInAmount + player.getFunds() > minimumBet) {
-                    System.out.println("Making good choices, are we?");
-                    return reBuyInAmount;
-                } else {
-                    System.out.println("You need to have more than the minimum bet after buying in. Try again.");
-                }
-            } catch (NumberFormatException | ConcurrentModificationException e) {
-                System.out.println("That wasn't a number? I guess you're out, bruh.");
-                return 0;
+            if (playerInput + player.getFunds() > BlackJack.MINIMUM_BET) {
+                System.out.println("Making good choices, are we?");
+                return playerInput;
+            } else {
+                System.out.println("You need to have more than the minimum bet after buying in. Try again.");
             }
         }
     }
@@ -115,14 +91,15 @@ public class PlayerInputs {
         }
     }
 
-    private static int ensureInputIsNumber(String inputFromTerminal) {
+    protected static int ensureInputIsNumber(String inputFromTerminal) {
         try {
             return Integer.parseInt(inputFromTerminal);
         } catch (NumberFormatException e) {
-            System.out.println("Hey dumbass. It should be a number. If you fuck this up, you're betting nothing.");
             try {
-                return Integer.parseInt(inputFromTerminal);
+                System.out.println("In case it wasn't clear, it's gotta be a number. If you fuck this up, you're betting nada.");
+                return Integer.parseInt(getInputFromTerminal());
             } catch (NumberFormatException e2) {
+                System.out.println("You fucked it up, you're betting nada.");
                 return 0;
             }
         }
