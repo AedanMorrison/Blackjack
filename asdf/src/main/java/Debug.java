@@ -5,72 +5,38 @@ import java.util.Collections;
 import java.util.List;
 
 public class Debug {
-//    class Player {
+
+//    public static void main(String args[]) {
+//        Scanner in = new Scanner(System.in);
+//        int numberOfTemperatures = in.nextInt();
+//        List<Integer> listOfTemperatures = new ArrayList<>();
 //
-//        public static void main(String args[]) {
-//            Scanner in = new Scanner(System.in);
-//            int lightX = in.nextInt();
-//            int lightY = in.nextInt();
-//            int initialTx = in.nextInt();
-//            int initialTy = in.nextInt();
-//            int remainingTurns = in.nextInt();
-//            int thorX = initialTx;
-//            int thorY = initialTy;
-//
-//            while (remainingTurns > 0) {
-//                String thorGo = "";
-//                switch (thorGoVertical(lightY, thorY)) {
-//                    case "North":
-//                        thorGo += "N";
-//                        thorY--;
-//                        break;
-//                    case "South":
-//                        thorGo += "S";
-//                        thorY++;
-//                        break;
-//                    default:
-//                }
-//
-//                switch (thorGoHorizontal(lightX, thorX)) {
-//                    case "East":
-//                        thorGo += "E";
-//                        thorX++;
-//                        break;
-//                    case "West":
-//                        thorGo += "W";
-//                        thorX--;
-//                        break;
-//                    default:
-//                }
-//                System.out.println(thorGo);
-//            }
+//        for (int i = 0; i < numberOfTemperatures; i++) {
+//            listOfTemperatures.add(in.nextInt());
 //        }
 //
-//        public static String thorGoVertical(int lightY, int thorY) {
-//            if (lightY < thorY) {
-//                return "North";
-//            }
-//            if (lightY > thorY) {
-//                return "South";
-//            }
-//            return "";
-//        }
+//        Collections.sort(listOfTemperatures, Collections.reverseOrder());
 //
-//        public static String thorGoHorizontal(int lightX, int thorX) {
-//            if (lightX > thorX) {
-//                return "East";
-//            }
-//            if (lightX < thorX) {
-//                return "West";
-//            }
-//            return "";
-//        }
+//        int answer = closest(0, listOfTemperatures);
+//
+//        System.out.println(answer);
 //    }
 //
+//    public static int closest(int compareAgainstMe, List<Integer> listOfTemperatures) {
+//        int currentTemperatureClosestToZero = Integer.MAX_VALUE;
+//        int closestNumberToZero = compareAgainstMe;
 //
-//    List<Integer> allTemperatures = new ArrayList<>();
-//    (int i = 0; i < quantityOfTemperatures; i++) {
-//        allTemperatures.add(in.nextInt());
+//        for (int individualTemperature : listOfTemperatures) {
+//            int absoluteIndividualTemperature = Math.abs(individualTemperature);
 //
+//            if (absoluteIndividualTemperature < currentTemperatureClosestToZero) {
+//                currentTemperatureClosestToZero = absoluteIndividualTemperature;
+//                closestNumberToZero = individualTemperature;
+//            }
+//        }
+//        return closestNumberToZero;
+//    }
+
+
 }
 
