@@ -10,22 +10,28 @@ public class PlayerInputs {
     public static int takePlayerBet(Player bettingPlayer) {
         System.out.println(bettingPlayer.name + " should input a number for a bet now. Don't go broke.");
         int desiredBet = ensureInputIsNumber(getInputFromTerminal());
-        while (checkAgainstMinimumBet(desiredBet) || checkAgainstPlayerFunds(desiredBet, bettingPlayer)) {
+        int attempts = 0;
+        while (checkAgainstMinimumBet(desiredBet) || checkAgainstPlayerFunds(desiredBet, bettingPlayer)) { //checks that desired bet passes criteria before continuing
+            if (attempts > 2) {
+                System.out.println("All in you say? Great!");
+                return bettingPlayer.getFunds();
+            }
+            attempts++;
             desiredBet = ensureInputIsNumber(getInputFromTerminal());
         }
-        System.out.println(bettingPlayer.name + " has chosen to bet: " + desiredBet);
+        System.out.println(bettingPlayer.name + " has bet: " + desiredBet);
         return desiredBet;
     }
 
     public static GameActions.PlayerAction takePlayerAction() {
-        System.out.println("To Hit, type 'hit'. To Stand, type 'stand'.\nIF you can double down, you may also type 'double'.");
+        System.out.println("Hit, Stand or Double Down.");
         while (true) {
             switch (getInputFromTerminal().toLowerCase()) {
                 case "hit":
                     return GameActions.PlayerAction.HIT;
                 case "stand":
                     return GameActions.PlayerAction.STAND;
-                case "double":
+                case "double down":
                     return GameActions.PlayerAction.DOUBLE_DOWN;
                 default:
                     System.out.println("You did something stupid, enter what I asked for");
@@ -50,16 +56,17 @@ public class PlayerInputs {
     }
 
     public static int getPlayerReBuyIn(Player player) {
-        System.out.println("How much would " + player.name + " like to buy back in with? If you're out, don't type a number.");
+        System.out.println(player.name + " how much ya wanna buy back in with? 0 if you're out.");
         while (true) {
             int playerInput = ensureInputIsNumber(getInputFromTerminal());
             if (playerInput == 0) {
                 return playerInput;
             }
             if (playerInput + player.getFunds() > BlackJack.MINIMUM_BET) {
-                System.out.println("Making good choices, are we?");
+                System.out.println("This better not be rent money.");
                 return playerInput;
             } else {
+                getPlayerReBuyInElseLoopOccurred = true;
                 System.out.println("You need to have more than the minimum bet after buying in. Try again.");
             }
         }
@@ -86,7 +93,7 @@ public class PlayerInputs {
         try {
             return reader.readLine();
         } catch (IOException e) {
-            System.out.println("Could not find what you're looking for. Whoops?");
+            System.out.println("I don't get it, come again?");
             return "";
         }
     }
@@ -99,9 +106,15 @@ public class PlayerInputs {
                 System.out.println("In case it wasn't clear, it's gotta be a number. If you fuck this up, you're betting nada.");
                 return Integer.parseInt(getInputFromTerminal());
             } catch (NumberFormatException e2) {
-                System.out.println("You fucked it up, you're betting nada.");
+                System.out.println("You fucked it up, you bet nada.");
                 return 0;
             }
         }
     }
+
+    static boolean getPlayerReBuyInElseLoopOccurred = false;
+    protected static boolean didGetPlayerReBuyInElseLoopOccur() {
+        return getPlayerReBuyInElseLoopOccurred;
+    }
+
 }
